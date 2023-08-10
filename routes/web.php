@@ -16,3 +16,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+// routes/web.php
+
+// ... other routes ...
+
+// Grouping routes that need authentication
+Route::middleware(['auth'])->group(function () {
+    Route::get('/incomes', 'IncomeController@index');
+    Route::get('/expenses', 'ExpenseController@index');
+    // ... other routes related to incomes and expenses ...
+});
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

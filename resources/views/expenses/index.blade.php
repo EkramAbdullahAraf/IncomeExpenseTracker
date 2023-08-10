@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h2>Your Income Records</h2>
+        <h2>Your Expense Records</h2>
 
         <table class="table">
             <thead>
@@ -14,22 +14,22 @@
             </tr>
             </thead>
             <tbody>
-            @forelse($incomes as $income)
+            @forelse($expenses as $expense)
                 <tr>
-                    <td>{{ $income->date }}</td>
-                    <td>{{ $income->description }}</td>
-                    <td>${{ number_format($income->amount, 2) }}</td>
-                    <td>{{ $income->category }}</td>
+                    <td>{{ $expense->date }}</td>
+                    <td>{{ $expense->description }}</td>
+                    <td>${{ number_format($expense->amount, 2) }}</td>
+                    <td>{{ $expense->category }}</td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4">No income records found.</td>
+                    <td colspan="4">No expense records found.</td>
                 </tr>
             @endforelse
             </tbody>
         </table>
 
         <!-- Pagination Links -->
-        {{ $incomes->links() }}
+        {{ $expenses->links() }}
     </div>
 @endsection

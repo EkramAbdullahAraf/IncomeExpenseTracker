@@ -8,6 +8,7 @@ class IncomeController extends Controller
 {
     public function index(Request $request)
     {
+
         // Fetching income records with optional filtering
         $incomes = auth()->user()->incomes();
 
@@ -55,6 +56,20 @@ class IncomeController extends Controller
         // ...
 
         return redirect()->route('incomes.index')->with('success', 'Income updated successfully');
+    }
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'amount' => 'required|numeric|min:0',
+            'description' => 'required|string|max:255',
+            'date' => 'required|date',
+            'category' => 'nullable|string|max:255'
+        ]);
+
+        // Assuming user relationship is set up
+        $income = $request->user()->incomes()->create($validatedData);
+
+        return redirect()->route('incomes.index')->with('success', 'Income added successfully');
     }
 
     public function destroy(Income $income)

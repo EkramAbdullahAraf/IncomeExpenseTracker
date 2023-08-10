@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Expense;
 use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
     public function index(Request $request)
     {
+
         // Fetching expense records with optional filtering
         $expenses = auth()->user()->expenses();
 
@@ -51,25 +52,27 @@ class ExpenseController extends Controller
         // Authorization check
         $this->authorize('update', $expense);
 
-        // Validation and update logic
-        // ...
+
 
         return redirect()->route('expenses.index')->with('success', 'Expense updated successfully');
     }
     public function store(Request $request)
     {
-        // Validation
         $validatedData = $request->validate([
             'amount' => 'required|numeric|min:0',
             'description' => 'required|string|max:255',
             'date' => 'required|date',
-            'category' => 'nullable|string|max:255',
+            'category' => 'nullable|string|max:255'
         ]);
 
-        // Storing data with the associated user
-        $expense = $request->user()->expenses()->create($validatedData);
+
+        $request->user()->expenses()->create($validatedData);
 
         return redirect()->route('expenses.index')->with('success', 'Expense added successfully');
+    }
+    public function create()
+    {
+        return view('expenses.create');
     }
 
     public function destroy(Expense $expense)

@@ -15,6 +15,8 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+                     {{-- <a href="{{ route('incomes.create') }}">Add New Income</a>--}}
+
                 </div>
             </div>
         </div>

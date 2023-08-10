@@ -52,8 +52,7 @@ class IncomeController extends Controller
         // Authorization check
         $this->authorize('update', $income);
 
-        // Validation and update logic
-        // ...
+
 
         return redirect()->route('incomes.index')->with('success', 'Income updated successfully');
     }
@@ -66,10 +65,14 @@ class IncomeController extends Controller
             'category' => 'nullable|string|max:255'
         ]);
 
-        // Assuming user relationship is set up
-        $income = $request->user()->incomes()->create($validatedData);
+
+       $request->user()->incomes()->create($validatedData);
 
         return redirect()->route('incomes.index')->with('success', 'Income added successfully');
+    }
+    public function create()
+    {
+        return view('incomes.create');
     }
 
     public function destroy(Income $income)
